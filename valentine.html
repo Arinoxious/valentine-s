@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>For Aashriya ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9eb5, #fff0f5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    /* Floating Hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 22px;
+      color: #ff4d6d;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 25px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+      text-align: center;
+      max-width: 420px;
+      z-index: 5;
+      position: relative;
+    }
+
+    h1 {
+      color: #ff3366;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    p {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #yesBtn {
+      background: #ff3366;
+      color: white;
+      position: relative;
+    }
+
+    #yesBtn:hover {
+      background: #ff0033;
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #ffd6e5;
+      color: #ff3366;
+      position: fixed;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #result h2 {
+      color: #ff3366;
+    }
+
+    #result img {
+      width: 220px;
+      border-radius: 15px;
+      margin-top: 15px;
+      box-shadow: 0 0 15px pink;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="container">
+
+    <h1>Hey Aashriya ❤️</h1>
+
+    <p>
+      You make my world brighter every day ✨<br>
+      Will you be my Valentine?
+    </p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 💔</button>
+    </div>
+
+    <div id="result">
+      <h2>Good choice, Aashriya ❤️😌</h2>
+      <img src="https://c.tenor.com/5W3O1UxUHcIAAAAC/tenor.gif" alt="love">
+    </div>
+
+  </div>
+
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const result = document.getElementById("result");
+
+
+    // Set initial position of No button
+    function setInitialPosition() {
+      const rect = document.querySelector(".buttons").getBoundingClientRect();
+
+      noBtn.style.left = rect.right + 20 + "px";
+      noBtn.style.top = rect.top + "px";
+    }
+
+    setInitialPosition();
+
+
+    // Move No button anywhere on screen
+    function moveNoButton() {
+
+      const padding = 20;
+
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const randomX = Math.random() * maxX;
+      const randomY = Math.random() * maxY;
+
+      noBtn.style.transition = "0.07s linear";
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    }
+
+
+    // Dodge on hover
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // Dodge when mouse is close
+    document.addEventListener("mousemove", (e) => {
+
+      const rect = noBtn.getBoundingClientRect();
+
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 150) {
+        moveNoButton();
+      }
+    });
+
+
+    // Yes button click
+    yesBtn.addEventListener("click", () => {
+
+      result.style.display = "block";
+
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+    });
+
+
+    // Floating hearts generator
+    function createHeart() {
+
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+      heart.style.fontSize = (16 + Math.random() * 22) + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(createHeart, 350);
+  </script>
+
+</body>
+
+</html>
